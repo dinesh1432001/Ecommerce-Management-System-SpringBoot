@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+</head>
+<body>
+    <h1>Welcome, <span th:text="${customer.username}">User</span></h1>
+    <p th:text="${msg}"></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}">Product</td>
+                <td th:text="${product.price}">Price</td>
+                <td>
+                    <img th:src="@{${product.imageUrl}}" alt="Product Image" width="400" height="200"/>
+                </td>
+                <td>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="customerId" th:value="${customer.id}"/>
+                        <input type="hidden" name="productId" th:value="${product.id}"/>
+                        <input type="number" name="quantity" min="1" value="1"/>
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
